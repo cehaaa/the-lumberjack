@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Vite + TS</title>
+	</head>
+	<body>
+		<!-- start modal -->
+		<dialog class="modal-overlay" id="start-modal">
+			<div class="modal">
+				<div>
+					<div class="modal-title">LumberJack</div>
+					<div>Choose game duration</div>
+				</div>
+
+				<div class="game-duration-container">
+					<div class="game-duration">
+						<input
+							name="game-duration"
+							type="radio"
+							value="10"
+							id="10sec"
+							checked="checked"
+						/>
+						<label for="10sec" class="game-duration-label"> 10 Second </label>
+					</div>
+
+					<div class="game-duration">
+						<input name="game-duration" type="radio" value="30" id="30sec" />
+						<label for="30sec" class="game-duration-label"> 30 Second </label>
+					</div>
+
+					<div class="game-duration">
+						<input name="game-duration" type="radio" value="50" id="50sec" />
+						<label for="50sec" class="game-duration-label"> 50 Second </label>
+					</div>
+				</div>
+
+				<div>
+					<button class="button primary" id="start-game-button">
+						Start Game
+					</button>
+				</div>
+			</div>
+		</dialog>
+		<!-- end start modal -->
+
+		<div id="app" class="app">
+			<div class="game" id="game">
+				<div class="sky" id="sky"></div>
+				<div class="land" id="land">
+					<div class="place">
+						<div class="tree">
+							<div class="tree-trunks" id="tree-trunks">
+								<div class="tree-trunk">
+									<div class="trunk light"></div>
+									<div class="trunk medium">
+										<div class="texture"></div>
+									</div>
+									<div class="trunk dark"></div>
+								</div>
+							</div>
+							<div class="tree-root"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="module" src="./main.ts"></script>
+	</body>
+</html>

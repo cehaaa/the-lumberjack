@@ -1,0 +1,73 @@
+.tree {
+	width: 100px;
+	height: var(--tree-height);
+
+	display: flex;
+	flex-direction: column;
+
+	transform: translateY(calc((var(--tree-height) - var(--place-height)) * -1));
+}
+
+.tree .tree-trunks {
+	margin-top: auto;
+	width: 100%;
+	overflow: hidden;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+}
+
+.tree-trunks .tree-trunk {
+	background: chocolate;
+	width: 75%;
+	height: var(--tree-trunk-height);
+	flex-shrink: 0;
+
+	border-top: 2px solid black;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	display: flex;
+}
+
+.tree-trunk .trunk {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.trunk .texture {
+	width: 15px;
+	height: 30px;
+	background: var(--tree-trunk-texture);
+	border-radius: 100px;
+}
+
+.trunk.light {
+	background: var(--tree-trunk-light);
+}
+
+.trunk.medium {
+	background: var(--tree-trunk-medium);
+}
+
+.trunk.dark {
+	background: var(--tree-trunk-dark);
+}
+
+.tree-trunk:last-child {
+	border-top: 0;
+}
+
+.tree .tree-root {
+	width: 90%;
+	height: 20px;
+
+	background: var(--land-background);
+	border: 5px solid black;
+	border-radius: 100px;
+
+	flex-shrink: 0;
+}

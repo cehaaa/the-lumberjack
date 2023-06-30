@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap");
+
+:root {
+	--primary: #72c83c;
+	--primary-dark: #56b52c;
+
+	--sky-background: #b5fff7;
+	--land-background: #77c83e;
+
+	--tree-trunk-light: #b26145;
+	--tree-trunk-medium: #a65a3f;
+	--tree-trunk-dark: #944933;
+	--tree-trunk-texture: #b26145;
+
+	--game-height: 500px;
+	--game-width: 390px;
+
+	--sky-height: calc(var(--game-height) - 110px);
+	--land-height: calc(var(--game-height) - var(--sky-height));
+
+	--place-height: 40px;
+
+	--tree-height: calc(var(--place-height) + var(--sky-height));
+	--tree-trunk-height: 100px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Poppins", sans-serif;
+}
+
+.app {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.game {
+	width: var(--game-width);
+	height: var(--game-height);
+}
+
+.game .sky {
+	width: 100%;
+	height: var(--sky-height);
+	background: var(--sky-background);
+}
+
+.game .land {
+	background: var(--land-background);
+
+	width: 100%;
+
+	height: var(--land-height);
+}
+
+.land .place {
+	width: 100%;
+	height: 40px;
+
+	display: flex;
+	justify-content: center;
+}
