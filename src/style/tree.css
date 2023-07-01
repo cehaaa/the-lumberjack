@@ -25,17 +25,9 @@
 	width: 80px;
 	height: var(--tree-trunk-height);
 	flex-shrink: 0;
-	/* display: flex; */
+	display: flex;
 	outline: 2px solid black;
 	position: relative;
-}
-
-.tree-trunk.show {
-	display: flex;
-}
-
-.tree-trunk.hide {
-	display: none;
 }
 
 .tree-trunk .trunk {
