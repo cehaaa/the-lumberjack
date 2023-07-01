@@ -13,12 +13,10 @@
 
 .modal-overlay.show {
 	display: flex;
-	animation: show 0.5s ease-in-out;
 }
 
 .modal-overlay.hide {
 	display: none;
-	animation: hide 0.5s ease-in-out;
 }
 
 .modal {
