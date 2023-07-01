@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<!-- start modal -->
-		<dialog class="modal-overlay" id="start-modal">
+		<dialog class="modal-overlay hide" id="start-modal">
 			<div class="modal">
 				<div>
 					<div class="modal-title">LumberJack</div>
@@ -47,22 +47,34 @@
 		</dialog>
 		<!-- end start modal -->
 
-		<div id="app" class="app">
-			<div class="game" id="game">
+		<div id="app" class="container">
+			<div class="game-container" id="game-container">
+				<!-- start countdown before game start -->
+				<div
+					class="countdown-before-start hide"
+					id="game-countdown-before-start-container"
+				>
+					<span></span>
+				</div>
+				<!-- end -->
+
+				<!-- start countdown after game start -->
+				<div class="scoreboard" id="scoreboard">Score: <span>0</span></div>
+				<!-- end -->
+
 				<div class="sky" id="sky"></div>
+
 				<div class="land" id="land">
 					<div class="place">
-						<div class="tree">
-							<div class="tree-trunks" id="tree-trunks">
-								<div class="tree-trunk">
-									<div class="trunk light"></div>
-									<div class="trunk medium">
-										<div class="texture"></div>
-									</div>
-									<div class="trunk dark"></div>
-								</div>
-							</div>
-							<div class="tree-root"></div>
+						<div class="player" id="player-container"></div>
+						<div
+							class="tree-cutdown-animation-container"
+							id="tree-cutdown-animation-container"
+						></div>
+						<div class="tree" id="tree-container">
+							<div class="tree-trunks" id="tree-trunks-container"></div>
+
+							<!-- <div class="tree-root"></div> -->
 						</div>
 					</div>
 				</div>
