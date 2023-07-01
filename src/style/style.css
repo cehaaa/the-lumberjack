@@ -21,7 +21,7 @@
 	--place-height: 40px;
 
 	--tree-height: calc(var(--place-height) + var(--sky-height));
-	--tree-trunk-height: 100px;
+	--tree-trunk-height: 80px;
 }
 
 * {
@@ -30,7 +30,7 @@
 	font-family: "Poppins", sans-serif;
 }
 
-.app {
+.container {
 	width: 100%;
 	height: 100vh;
 	display: flex;
@@ -38,29 +38,89 @@
 	justify-content: center;
 }
 
-.game {
+.game-container {
+	position: relative;
 	width: var(--game-width);
 	height: var(--game-height);
+	outline: 2px solid black;
 }
 
-.game .sky {
+.game-container .countdown-before-start {
+	position: absolute;
+	z-index: 1;
+
+	width: 100%;
+	height: 100%;
+
+	background: rgba(113, 113, 122, 0.5);
+
+	align-items: center;
+	justify-content: center;
+
+	color: white;
+	font-weight: 700;
+	font-size: 100px;
+}
+
+.countdown-before-start.hide {
+	display: none;
+}
+
+.countdown-before-start.show {
+	display: flex;
+}
+
+.game-container .countdown-after-start {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	font-weight: 700;
+}
+
+.game-container .sky {
 	width: 100%;
 	height: var(--sky-height);
 	background: var(--sky-background);
 }
 
-.game .land {
-	background: var(--land-background);
-
+.game-container .land {
 	width: 100%;
-
 	height: var(--land-height);
+	background: var(--land-background);
 }
 
 .land .place {
 	width: 100%;
 	height: 40px;
-
 	display: flex;
 	justify-content: center;
+	position: relative;
+}
+
+.place .tree-cutdown-animation-container {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+	width: 80px;
+	height: 80px;
+	/* background: green; */
+}
+
+.tree-cutdown-animation-container .cutdown {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	background: var(--tree-trunk-medium);
+	border-radius: 5px;
+	opacity: 0;
+}
+
+.cutdown.right {
+	right: 0;
+}
+
+.cutdown.left {
+	left: 0;
 }

@@ -1,0 +1,15 @@
+.player {
+	width: 80px;
+	height: 80px;
+	background: red;
+	position: absolute;
+	bottom: 0;
+}
+
+.player.left {
+	left: 50px;
+}
+
+.player.right {
+	right: 50px;
+}

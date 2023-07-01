@@ -42,3 +42,45 @@
 		transform: scale(1);
 	}
 }
+
+.falling-to-right-animation {
+	animation: falling-to-right 0.5s ease-in-out;
+}
+
+@keyframes falling-to-right {
+	from {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+	to {
+		transform: translate(100px, -50px) rotate(80deg);
+	}
+}
+
+.falling-to-left-animation {
+	animation: falling-to-left 0.5s ease-in-out;
+}
+
+@keyframes falling-to-left {
+	from {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+	to {
+		transform: translate(-100px, -50px) rotate(-80deg);
+	}
+}
+
+.falling-to-bottom-animation {
+	animation: falling-to-bottom 0.5s ease-in-out;
+}
+
+@keyframes falling-to-bottom {
+	from {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+	to {
+		transform: translate(0px, 80px);
+	}
+}

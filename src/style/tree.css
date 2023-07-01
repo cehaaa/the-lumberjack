@@ -1,8 +1,9 @@
 .tree {
-	width: 100px;
+	width: 100%;
 	height: var(--tree-height);
 
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 
 	transform: translateY(calc((var(--tree-height) - var(--place-height)) * -1));
@@ -11,6 +12,7 @@
 .tree .tree-trunks {
 	margin-top: auto;
 	width: 100%;
+	max-height: 100%;
 	overflow: hidden;
 	flex-grow: 1;
 	display: flex;
@@ -20,14 +22,20 @@
 
 .tree-trunks .tree-trunk {
 	background: chocolate;
-	width: 75%;
+	width: 80px;
 	height: var(--tree-trunk-height);
 	flex-shrink: 0;
+	/* display: flex; */
+	outline: 2px solid black;
+	position: relative;
+}
 
-	border-top: 2px solid black;
-	border-left: 2px solid black;
-	border-right: 2px solid black;
+.tree-trunk.show {
 	display: flex;
+}
+
+.tree-trunk.hide {
+	display: none;
 }
 
 .tree-trunk .trunk {
@@ -36,6 +44,46 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	position: relative;
+}
+
+.tree-trunk .branch {
+	background: var(--tree-trunk-medium);
+	position: absolute;
+	top: 50%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.branch.right {
+	transform-origin: left center;
+	left: 67%;
+	transform: translateY(-50%) rotate(0deg);
+	width: 130px;
+	height: 25px;
+
+	border-top-right-radius: 100px;
+	border-bottom-right-radius: 100px;
+
+	border-top: 2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+.branch.left {
+	transform-origin: right center;
+	right: 67%;
+	transform: translateY(-50%) rotate(0deg);
+	width: 130px;
+	height: 25px;
+
+	border-top-left-radius: 100px;
+	border-bottom-left-radius: 100px;
+
+	border-top: 2px solid black;
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
 }
 
 .trunk .texture {
@@ -55,10 +103,6 @@
 
 .trunk.dark {
 	background: var(--tree-trunk-dark);
-}
-
-.tree-trunk:last-child {
-	border-top: 0;
 }
 
 .tree .tree-root {
