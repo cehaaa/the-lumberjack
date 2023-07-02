@@ -17,6 +17,7 @@
 }
 
 .button:hover {
+	border: 3px solid var(--primary-dark);
 	background: var(--primary);
 }
 
@@ -26,5 +27,6 @@
 }
 
 .button.primary:hover {
+	border: 3px solid var(--primary);
 	background: var(--primary-dark);
 }

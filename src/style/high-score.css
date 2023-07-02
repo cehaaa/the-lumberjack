@@ -1,0 +1,36 @@
+.high-score-container {
+	height: 180px;
+	width: 100%;
+	flex-grow: 1;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+}
+
+.high-score-container.not-empty {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+.high-score-container.empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.high-score-container::-webkit-scrollbar {
+	display: none;
+}
+
+.high-score-card {
+	border-radius: 10px;
+	border: 5px solid var(--tree-trunk-dark);
+	padding: 10px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 700;
+}

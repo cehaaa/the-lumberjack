@@ -11,17 +11,9 @@
 	z-index: 100;
 }
 
-.modal-overlay.show {
-	display: flex;
-}
-
-.modal-overlay.hide {
-	display: none;
-}
-
 .modal {
-	width: 400px;
-	height: 200px;
+	width: 450px;
+	height: 300px;
 	background: var(--tree-trunk-texture);
 	color: white;
 	padding: 16px;
@@ -29,45 +21,24 @@
 	border: 5px solid var(--tree-trunk-dark);
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+}
+
+.modal .modal-header {
+}
+
+.modal .modal-body {
+	margin-top: 20px;
+}
+
+.modal .modal-footer {
+	display: flex;
+	gap: 10px;
+	margin-top: auto;
 }
 
 .modal .modal-title {
 	font-size: 20px;
 	font-weight: 700;
-}
-
-.game-duration-container {
-	display: flex;
-	justify-content: space-between;
-}
-
-.game-duration-container .game-duration {
-}
-
-.game-duration input[type="radio"] {
-	display: none;
-}
-
-.game-duration .game-duration-label {
-	padding: 10px 20px;
-	cursor: pointer;
-	border-radius: 10px;
-	border: 0;
-	outline: 0;
-	background: transparent;
-	border: 3px solid var(--primary-dark);
-	transition: all 0.3s ease-in-out;
-	font-weight: 600;
-	color: white;
-}
-
-.game-duration-label:hover {
-	background: var(--primary);
-}
-
-.game-duration input[type="radio"]:checked + .game-duration-label {
-	background: var(--primary);
 }
 
 .modal .button {
