@@ -8,37 +8,27 @@
 	</head>
 	<body>
 		<!-- start modal -->
-		<dialog class="modal-overlay hide" id="start-modal">
+		<dialog class="modal-overlay" id="start-modal">
 			<div class="modal">
-				<div>
-					<div class="modal-title">LumberJack</div>
-					<div>Choose game duration</div>
-				</div>
-
-				<div class="game-duration-container">
-					<div class="game-duration">
-						<input
-							name="game-duration"
-							type="radio"
-							value="10"
-							id="10sec"
-							checked="checked"
-						/>
-						<label for="10sec" class="game-duration-label"> 10 Second </label>
-					</div>
-
-					<div class="game-duration">
-						<input name="game-duration" type="radio" value="30" id="30sec" />
-						<label for="30sec" class="game-duration-label"> 30 Second </label>
-					</div>
-
-					<div class="game-duration">
-						<input name="game-duration" type="radio" value="50" id="50sec" />
-						<label for="50sec" class="game-duration-label"> 50 Second </label>
+				<div class="modal-header">
+					<div class="modal-title">
+						Welcome to the exciting world of Lumberjack! 🌳🪓
 					</div>
 				</div>
 
-				<div>
+				<div class="modal-body">
+					<div>
+						The objective of Lumberjack is to cut down a tree by typing the
+						correct keys on your keyboard. To make it happen, all you need are
+						two keys: <span class="badge">F key</span> and
+						<span class="badge">J Key</span>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="button" id="show-high-score-modal-button">
+						Show High Score
+					</button>
 					<button class="button primary" id="start-game-button">
 						Start Game
 					</button>
@@ -46,6 +36,30 @@
 			</div>
 		</dialog>
 		<!-- end start modal -->
+
+		<!-- high score modal -->
+		<dialog class="modal-overlay" id="high-score-modal">
+			<div class="modal">
+				<div class="modal-header">
+					<div class="modal-title">High Score</div>
+				</div>
+
+				<div class="modal-body">
+					<div class="high-score-container" id="high-score-container">
+						<div id="empty-high-score-indicator" style="display: none">
+							No Score Yet
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="button" id="close-high-score-modal-button">
+						Back
+					</button>
+				</div>
+			</div>
+		</dialog>
+		<!-- end high score modal -->
 
 		<div id="app" class="container">
 			<div class="game-container" id="game-container">
@@ -66,7 +80,11 @@
 
 				<div class="land" id="land">
 					<div class="place">
-						<div class="player" id="player-container"></div>
+						<div class="player" id="player-container">
+							<div class="player-face"></div>
+							<div class="player-body"></div>
+							<div class="player-foot"></div>
+						</div>
 						<div
 							class="tree-cutdown-animation-container"
 							id="tree-cutdown-animation-container"

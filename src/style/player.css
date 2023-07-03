@@ -1,9 +1,14 @@
 .player {
-	width: 80px;
-	height: 80px;
+	width: 90px;
+	height: 90px;
 	background: red;
 	position: absolute;
 	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	outline: 2px solid black;
 }
 
 .player.left {
@@ -12,4 +17,22 @@
 
 .player.right {
 	right: 50px;
+}
+
+.player .player-face {
+	background: #ffddad;
+	height: 40px;
+	width: 100%;
+}
+
+.player .player-body {
+	background: #ff6057;
+	height: 30px;
+	width: 100%;
+}
+
+.player .player-foot {
+	background: #46313a;
+	height: 20px;
+	width: 100%;
 }
