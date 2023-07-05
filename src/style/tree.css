@@ -46,6 +46,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	z-index: 100;
 }
 
 .branch.right {
@@ -95,15 +96,4 @@
 
 .trunk.dark {
 	background: var(--tree-trunk-dark);
-}
-
-.tree .tree-root {
-	width: 90%;
-	height: 20px;
-
-	background: var(--land-background);
-	border: 5px solid black;
-	border-radius: 100px;
-
-	flex-shrink: 0;
 }
