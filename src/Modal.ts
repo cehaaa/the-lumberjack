@@ -1,17 +1,19 @@
 interface ModalConstructorOptions {
-	modalEl: HTMLDialogElement;
 	isShow: boolean;
+	modalOverlay: HTMLDialogElement;
 }
 
 class Modal {
-	modalEl: HTMLDialogElement;
 	isShow: boolean;
+	modalOverlay: HTMLDialogElement;
+	modalContainer: HTMLDivElement;
 
-	resolveCallback: null | ((value: unknown) => void);
+	resolveCallback: ((value: unknown) => void) | null;
 
-	constructor({ modalEl, isShow }: ModalConstructorOptions) {
-		this.modalEl = modalEl;
+	constructor({ modalOverlay, isShow }: ModalConstructorOptions) {
 		this.isShow = isShow;
+		this.modalOverlay = modalOverlay;
+		this.modalContainer = this.modalOverlay.children[0] as HTMLDivElement;
 
 		this.resolveCallback = null;
 	}
@@ -23,16 +25,12 @@ class Modal {
 			this.closeModal();
 		}
 
-		// this.listener();
+		this.listener();
 	}
 
 	listener() {
-		this.modalEl.addEventListener("animationend", () => {
-			if (this.isShow) {
-				this.modalEl.classList.remove("hide");
-			} else {
-				this.modalEl.classList.remove("show");
-			}
+		this.modalContainer.addEventListener("animationend", () => {
+			this.modalOverlay.style.display = this.isShow ? "flex" : "none";
 
 			if (this.resolveCallback) {
 				this.resolveCallback(true);
@@ -41,29 +39,28 @@ class Modal {
 		});
 	}
 
-	openModal(): Promise<void> {
+	openModal() {
 		return new Promise(resolve => {
 			this.isShow = true;
 
-			this.modalEl.classList.remove("hide");
-			this.modalEl.classList.add("show");
+			this.modalOverlay.style.display = "flex";
 
-			resolve();
+			this.modalContainer.classList.remove("hide-animation");
+			this.modalContainer.classList.add("show-animation");
 
-			// this.resolveCallback = resolve;
+			this.resolveCallback = resolve;
 		});
 	}
 
 	closeModal() {
-		// return new Promise(resolve => {
-		// 	this.isShow = false;
-		// 	this.modalEl.classList.add("hide-animation");
-		// 	this.modalEl.addEventListener("animationend", () => {
-		// 		this.modalEl.classList.remove("show");
-		// 		this.modalEl.classList.remove("hide-animation");
-		// 	});
-		// 	this.resolveCallback = resolve;
-		// });
+		return new Promise(resolve => {
+			this.isShow = false;
+
+			this.modalContainer.classList.remove("show-animation");
+			this.modalContainer.classList.add("hide-animation");
+
+			this.resolveCallback = resolve;
+		});
 	}
 }
 
