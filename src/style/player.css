@@ -1,6 +1,6 @@
 .player {
-	width: 90px;
-	height: 90px;
+	width: 95px;
+	height: 95px;
 	background: red;
 	position: absolute;
 	bottom: 0;
@@ -12,27 +12,112 @@
 }
 
 .player.left {
-	left: 50px;
+	left: 45px;
 }
 
 .player.right {
-	right: 50px;
+	right: 45px;
 }
 
 .player .player-face {
 	background: #ffddad;
-	height: 40px;
+	height: 50%;
 	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+	/* z-index: 1; */
+}
+
+.player .eyes {
+	width: 100%;
+	height: 10px;
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.eyes .eye {
+	width: 20px;
+	height: 8px;
+	background: white;
+	display: flex;
+}
+
+.eye .cornea {
+	width: 10px;
+	height: 100%;
+	background: black;
+	display: flex;
+	justify-content: center;
+}
+
+.cornea.right {
+	margin-left: auto;
+}
+
+.cornea.left {
+	margin-right: auto;
 }
 
 .player .player-body {
 	background: #ff6057;
-	height: 30px;
+	height: 25%;
 	width: 100%;
+	position: relative;
+	border-top: 2px solid black;
 }
 
-.player .player-foot {
-	background: #46313a;
-	height: 20px;
+.player-body .collar {
+	position: absolute;
+	background: #ffddad;
+	width: 12px;
+	height: 12px;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(45deg);
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+}
+
+.player-body .line {
+	position: absolute;
+	background: #514959;
+	width: 2px;
+	height: calc(19px);
+	left: 50%;
+	top: 7px;
+	transform: translate(-50%, 0);
+}
+
+.player .player-leg {
+	background: #2a7992;
+	height: 25%;
 	width: 100%;
+	position: relative;
+	border-top: 2px solid black;
+}
+
+.player-leg .belt {
+	width: 15px;
+	height: 10px;
+	background: #ffb634;
+	position: absolute;
+	border-radius: 2px;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.player-leg .line {
+	position: absolute;
+	background: #514959;
+	width: 2px;
+	height: 100%;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
 }
