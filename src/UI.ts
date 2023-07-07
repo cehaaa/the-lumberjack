@@ -1,85 +1,136 @@
 import Game from "./Game";
 import Modal from "./Modal";
+import HighScoreStorage from "./HighScoreStorage";
 
 interface UIConstructorOptions {
-	gameClass: Game;
-
-	gameScreen: HTMLDivElement;
-	startModal: HTMLDialogElement;
-	gameModeDurationRadios: Array<HTMLInputElement>;
-	startGameButton: HTMLButtonElement;
+	game: Game;
+	highScoreStorage: HighScoreStorage;
 }
 
 class UI {
-	gameClass: Game;
+	game: Game;
 	startModalClass: Modal | null;
+	highScoreModalClass: Modal | null;
 
-	gameScreen: HTMLDivElement;
 	startModal: HTMLDialogElement;
-	gameModeDurationRadios: Array<HTMLInputElement>;
+	highScoreModal: HTMLDialogElement;
 	startGameButton: HTMLButtonElement;
+	showHighScoreModalButton: HTMLButtonElement;
+	closeShowHighScoreModalButton: HTMLButtonElement;
 
-	gameDuration: number;
+	highScoreContainer: HTMLDivElement;
+	emptyHighScoreIndicator: HTMLDivElement;
 
-	constructor({
-		gameClass,
-		gameScreen,
-		startModal,
-		gameModeDurationRadios,
-		startGameButton,
-	}: UIConstructorOptions) {
-		this.gameClass = gameClass;
+	highScoreStorage: HighScoreStorage;
 
-		this.gameScreen = gameScreen;
-		this.startModal = startModal;
-		this.gameModeDurationRadios = gameModeDurationRadios;
-		this.startGameButton = startGameButton;
-
+	constructor({ game, highScoreStorage }: UIConstructorOptions) {
+		this.game = game;
 		this.startModalClass = null;
+		this.highScoreModalClass = null;
 
-		this.gameDuration = this.gameModeDurationRadios.find(
-			radio => radio.checked
-		)!.value as unknown as number;
+		this.startModal = document.querySelector("#start-modal")!;
+		this.highScoreModal = document.querySelector("#high-score-modal")!;
+		this.startGameButton = document.querySelector("#start-game-button")!;
+		this.showHighScoreModalButton = document.querySelector(
+			"#show-high-score-modal-button"
+		)!;
+		this.closeShowHighScoreModalButton = document.querySelector(
+			"#close-high-score-modal-button"
+		)!;
+
+		this.highScoreContainer = document.querySelector("#high-score-container")!;
+		this.emptyHighScoreIndicator = document.querySelector(
+			"#empty-high-score-indicator"
+		)!;
+
+		this.highScoreStorage = highScoreStorage;
 	}
 
 	init() {
 		this.listener();
-
 		this.initStartModal();
+
+		this.initHighScoreModal();
+		this.initHighScoreList();
+
+		this.game.init();
 	}
 
 	listener() {
-		this.gameModeDurationRadios.forEach(radio => {
-			radio.addEventListener(
-				"change",
-				this.gameModeDurationRadiosListener.bind(this)
-			);
-		});
-
 		this.startGameButton.addEventListener(
 			"click",
 			this.startGameButtonListener.bind(this)
+		);
+
+		this.showHighScoreModalButton.addEventListener(
+			"click",
+			this.showHighScoreModalButtonListener.bind(this)
+		);
+
+		this.closeShowHighScoreModalButton.addEventListener(
+			"click",
+			this.closeShowHighScoreModalButtonListener.bind(this)
 		);
 	}
 
 	initStartModal() {
 		this.startModalClass = new Modal({
-			modalEl: this.startModal,
 			isShow: true,
+			modalOverlay: this.startModal,
 		});
 
 		this.startModalClass.init();
 	}
 
-	gameModeDurationRadiosListener(e: Event) {
-		const target = e.target as HTMLInputElement;
-		const value = target.value;
+	initHighScoreModal() {
+		this.highScoreModalClass = new Modal({
+			isShow: false,
+			modalOverlay: this.highScoreModal,
+		});
 
-		this.gameDuration = Number(value);
+		this.highScoreModalClass.init();
+	}
+
+	initHighScoreList() {
+		const highScoreList = this.highScoreStorage.getHighScoreList();
+
+		if (highScoreList.length <= 0) {
+			this.highScoreContainer.classList.add("empty");
+			this.emptyHighScoreIndicator.style.display = "block";
+			return;
+		}
+
+		const html = highScoreList.reduce((acc: string, curr) => {
+			return (acc += `
+        <div class="high-score-card">
+          <div>${curr.name}</div>
+          <div>${curr.score}</div>
+        </div>
+      `);
+		}, "");
+
+		this.highScoreContainer.classList.remove("empty");
+		this.highScoreContainer.classList.add("not-empty");
+
+		this.emptyHighScoreIndicator.style.display = "none";
+
+		this.highScoreContainer.innerHTML = html;
 	}
 
 	startGameButtonListener() {
 		this.startModalClass!.closeModal();
+		this.game.initCountdownBeforeGameStart(3);
+	}
+
+	showHighScoreModalButtonListener() {
+		this.initHighScoreList();
+		this.startModalClass!.closeModal();
+		this.highScoreModalClass!.openModal();
+	}
+
+	closeShowHighScoreModalButtonListener() {
+		this.startModalClass!.openModal();
+		this.highScoreModalClass!.closeModal();
 	}
 }
 

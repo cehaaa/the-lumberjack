@@ -1,21 +1,19 @@
-interface HeroConstructorOptions {
-	playerContainer: HTMLDivElement;
-	playerEyes: HTMLDivElement[];
-}
-
 class Player {
 	position: string;
 
 	playerContainer: HTMLDivElement;
 	playerEyes: HTMLDivElement[];
 
-	constructor({ playerContainer, playerEyes }: HeroConstructorOptions) {
+	constructor() {
 		this.position = "left";
-		this.playerContainer = playerContainer;
-		this.playerEyes = playerEyes;
+		this.playerContainer = document.querySelector("#player-container")!;
+		this.playerEyes = Array.from(document.querySelectorAll(".eye"));
 	}
 
 	init() {
+		this.playerContainer.classList.remove("hide");
+		this.playerContainer.classList.add("show");
+
 		this.shiftPlayerPosition("left");
 		this.shiftPlayerEye("right");
 	}
@@ -36,6 +34,11 @@ class Player {
 
 			cornea.classList.add(position === "right" ? "right" : "left");
 		});
+	}
+
+	reset() {
+		this.shiftPlayerEye("right");
+		this.shiftPlayerPosition("left");
 	}
 }
 
