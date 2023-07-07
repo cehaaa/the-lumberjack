@@ -1,5 +1,5 @@
 .high-score-container {
-	height: 180px;
+	height: 150px;
 	width: 100%;
 	flex-grow: 1;
 	overflow-y: scroll;

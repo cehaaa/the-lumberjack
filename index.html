@@ -61,6 +61,33 @@
 		</dialog>
 		<!-- end high score modal -->
 
+		<!-- input player name modal -->
+		<dialog class="modal-overlay" id="input-player-name-modal">
+			<div class="modal">
+				<div class="modal-header">
+					<div class="modal-title">Your Name</div>
+				</div>
+
+				<div class="modal-body">
+					<input
+						type="text"
+						class="input-control"
+						placeholder="Your name..."
+						id="input-player-name"
+						value="Player"
+					/>
+				</div>
+
+				<div class="modal-footer">
+					<button class="button" id="close-game-button">Close</button>
+					<button class="button primary" id="start-new-game-button">
+						New Game
+					</button>
+				</div>
+			</div>
+		</dialog>
+		<!-- end input player name modal -->
+
 		<div id="app" class="container">
 			<div class="game-container" id="game-container">
 				<!-- start countdown before game start -->
@@ -81,7 +108,7 @@
 				<div class="land" id="land">
 					<div class="place">
 						<!-- player -->
-						<div class="player" id="player-container">
+						<div class="player hide" id="player-container">
 							<div class="player-face">
 								<div class="eyes">
 									<div class="eye">

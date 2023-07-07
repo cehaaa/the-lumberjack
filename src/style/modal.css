@@ -28,6 +28,7 @@
 
 .modal .modal-body {
 	margin-top: 20px;
+	/* width: 100%; */
 }
 
 .modal .modal-footer {
