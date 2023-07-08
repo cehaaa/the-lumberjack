@@ -130,7 +130,9 @@ class UI {
 			"#empty-high-score-indicator"
 		)!;
 
-		const highScoreList = this.highScoreStorage.getHighScoreList();
+		const highScoreList = this.highScoreStorage
+			.getHighScoreList()
+			.sort((a, b) => b.score - a.score);
 
 		if (highScoreList.length <= 0) {
 			highScoreContainer.classList.add("empty");
