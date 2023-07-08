@@ -13,7 +13,6 @@ class Game {
 	tree: Tree;
 	player: Player;
 	highScoreStorage: HighScoreStorage;
-	inputPlayerNameModalClass: Modal | null;
 
 	score: number;
 	gameOver: boolean;
@@ -24,10 +23,11 @@ class Game {
 	startNewGameButton: HTMLButtonElement;
 	gameCountdownBeforeStartContainer: HTMLDivElement;
 
+	inputPlayerNameModalClass: Modal | null;
+
 	constructor({ tree, player, highScoreStorage }: GameConstructorOptions) {
 		this.tree = tree;
 		this.player = player;
-		this.inputPlayerNameModalClass = null;
 
 		this.score = 0;
 		this.gameOver = false;
@@ -41,11 +41,18 @@ class Game {
 		)!;
 
 		this.highScoreStorage = highScoreStorage;
+
+		this.inputPlayerNameModalClass = null;
 	}
 
-	init() {
+	init({
+		inputPlayerNameModalClass,
+	}: {
+		inputPlayerNameModalClass: Modal | null;
+	}) {
+		this.inputPlayerNameModalClass = inputPlayerNameModalClass;
+
 		this.initGameUIComponent();
-		this.initInputPlayerNameModal();
 	}
 
 	listener() {
@@ -72,36 +79,11 @@ class Game {
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
-
-		this.startNewGameButton.addEventListener(
-			"click",
-			this.startNewGameButtonHandler.bind(this)
-		);
-
-		this.closeGameButton.addEventListener(
-			"click",
-			this.closeGameButtonHandler.bind(this)
-		);
 	}
 
 	initGameUIComponent() {
 		this.tree.init();
 		this.player.init();
-
-		this.initScoreboard();
-	}
-
-	initScoreboard() {
-		this.scoreboard.innerHTML = this.score.toString();
-	}
-
-	initInputPlayerNameModal() {
-		this.inputPlayerNameModalClass = new Modal({
-			isShow: false,
-			modalOverlay: document.querySelector("#input-player-name-modal")!,
-		});
-
-		this.inputPlayerNameModalClass.init();
 	}
 
 	initCountdownBeforeGameStart(countdownDuration: number) {
@@ -158,7 +140,7 @@ class Game {
 		) {
 			window.removeEventListener("keydown", handleKeyDown);
 
-			this.inputPlayerNameModalClass!.openModal();
+			this.inputPlayerNameModalClass?.openModal();
 		} else {
 			this.scoreboard.innerHTML = this.score.toString();
 		}
@@ -170,7 +152,7 @@ class Game {
 
 		this.highScoreStorage.setHighScoreList({
 			name: playerName === "" ? "Anonymous" : playerName,
-			score: this.score - 10 < 0 ? 10 : this.score - 10,
+			score: this.score - 10 <= 0 ? 10 : this.score - 10,
 		});
 	}
 
@@ -180,27 +162,6 @@ class Game {
 
 		this.tree.reset();
 		this.player.reset();
-
-		this.initScoreboard();
-		this.initCountdownBeforeGameStart(3);
-	}
-
-	startNewGameButtonHandler() {
-		this.inputPlayerNameModalClass!.closeModal();
-		this.saveScoreToLocalStorage();
-		this.resetGame();
-	}
-
-	closeGameButtonHandler() {
-		this.inputPlayerNameModalClass!.closeModal();
-		this.saveScoreToLocalStorage();
-
-		const startModal = new Modal({
-			isShow: true,
-			modalOverlay: document.querySelector("#start-modal")!,
-		});
-
-		startModal.init();
 	}
 }
 

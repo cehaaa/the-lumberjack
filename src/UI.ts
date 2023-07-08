@@ -9,17 +9,12 @@ interface UIConstructorOptions {
 
 class UI {
 	game: Game;
+
 	startModalClass: Modal | null;
 	highScoreModalClass: Modal | null;
+	inputPlayerNameModalClass: Modal | null;
 
-	startModal: HTMLDialogElement;
-	highScoreModal: HTMLDialogElement;
-	startGameButton: HTMLButtonElement;
-	showHighScoreModalButton: HTMLButtonElement;
-	closeShowHighScoreModalButton: HTMLButtonElement;
-
-	highScoreContainer: HTMLDivElement;
-	emptyHighScoreIndicator: HTMLDivElement;
+	scoreboard: HTMLDivElement;
 
 	highScoreStorage: HighScoreStorage;
 
@@ -27,21 +22,9 @@ class UI {
 		this.game = game;
 		this.startModalClass = null;
 		this.highScoreModalClass = null;
+		this.inputPlayerNameModalClass = null;
 
-		this.startModal = document.querySelector("#start-modal")!;
-		this.highScoreModal = document.querySelector("#high-score-modal")!;
-		this.startGameButton = document.querySelector("#start-game-button")!;
-		this.showHighScoreModalButton = document.querySelector(
-			"#show-high-score-modal-button"
-		)!;
-		this.closeShowHighScoreModalButton = document.querySelector(
-			"#close-high-score-modal-button"
-		)!;
-
-		this.highScoreContainer = document.querySelector("#high-score-container")!;
-		this.emptyHighScoreIndicator = document.querySelector(
-			"#empty-high-score-indicator"
-		)!;
+		this.scoreboard = document.querySelector("#scoreboard span")!;
 
 		this.highScoreStorage = highScoreStorage;
 	}
@@ -50,33 +33,65 @@ class UI {
 		this.listener();
 		this.initStartModal();
 
-		this.initHighScoreModal();
 		this.initHighScoreList();
+		this.initHighScoreModal();
+		this.initInputPlayerNameModal();
 
-		this.game.init();
+		this.game.init({
+			inputPlayerNameModalClass: this.inputPlayerNameModalClass,
+		});
 	}
 
 	listener() {
-		this.startGameButton.addEventListener(
+		// element
+		const startGameButton =
+			document.querySelector<HTMLButtonElement>("#start-game-button")!;
+		const showHighScoreModalButton = document.querySelector<HTMLButtonElement>(
+			"#show-high-score-modal-button"
+		)!;
+		const closeShowHighScoreModalButton =
+			document.querySelector<HTMLButtonElement>(
+				"#close-high-score-modal-button"
+			)!;
+
+		const startNewGameButton = document.querySelector<HTMLButtonElement>(
+			"#start-new-game-button"
+		)!;
+		const closeInputPlayerNameModalButton =
+			document.querySelector<HTMLButtonElement>(
+				"#close-input-player-name-modal-button"
+			)!;
+
+		startGameButton.addEventListener(
 			"click",
 			this.startGameButtonListener.bind(this)
 		);
 
-		this.showHighScoreModalButton.addEventListener(
+		showHighScoreModalButton.addEventListener(
 			"click",
 			this.showHighScoreModalButtonListener.bind(this)
 		);
 
-		this.closeShowHighScoreModalButton.addEventListener(
+		closeShowHighScoreModalButton.addEventListener(
 			"click",
 			this.closeShowHighScoreModalButtonListener.bind(this)
+		);
+
+		startNewGameButton.addEventListener(
+			"click",
+			this.startNewGameButtonListener.bind(this)
+		);
+
+		closeInputPlayerNameModalButton.addEventListener(
+			"click",
+			this.closeInputPlayerNameModalButtonListener.bind(this)
 		);
 	}
 
 	initStartModal() {
 		this.startModalClass = new Modal({
 			isShow: true,
-			modalOverlay: this.startModal,
+			modalOverlay: document.querySelector<HTMLDialogElement>("#start-modal")!,
 		});
 
 		this.startModalClass.init();
@@ -85,18 +100,41 @@ class UI {
 	initHighScoreModal() {
 		this.highScoreModalClass = new Modal({
 			isShow: false,
-			modalOverlay: this.highScoreModal,
+			modalOverlay:
+				document.querySelector<HTMLDialogElement>("#high-score-modal")!,
 		});
 
 		this.highScoreModalClass.init();
 	}
 
+	initInputPlayerNameModal() {
+		this.inputPlayerNameModalClass = new Modal({
+			isShow: false,
+			modalOverlay: document.querySelector<HTMLDialogElement>(
+				"#input-player-name-modal"
+			)!,
+		});
+
+		this.inputPlayerNameModalClass.init();
+	}
+
+	initScoreBoard() {
+		this.scoreboard.innerHTML = this.game.score.toString();
+	}
+
 	initHighScoreList() {
+		const highScoreContainer = document.querySelector<HTMLDivElement>(
+			"#high-score-container"
+		)!;
+		const emptyHighScoreIndicator = document.querySelector<HTMLDivElement>(
+			"#empty-high-score-indicator"
+		)!;
+
 		const highScoreList = this.highScoreStorage.getHighScoreList();
 
 		if (highScoreList.length <= 0) {
-			this.highScoreContainer.classList.add("empty");
-			this.emptyHighScoreIndicator.style.display = "block";
+			highScoreContainer.classList.add("empty");
+			emptyHighScoreIndicator.style.display = "block";
 			return;
 		}
 
@@ -109,12 +147,12 @@ class UI {
       `);
 		}, "");
 
-		this.highScoreContainer.classList.remove("empty");
-		this.highScoreContainer.classList.add("not-empty");
+		highScoreContainer.classList.remove("empty");
+		highScoreContainer.classList.add("not-empty");
 
-		this.emptyHighScoreIndicator.style.display = "none";
+		// emptyHighScoreIndicator.style.display = "none";
 
-		this.highScoreContainer.innerHTML = html;
+		highScoreContainer.innerHTML = html;
 	}
 
 	startGameButtonListener() {
@@ -131,6 +169,26 @@ class UI {
 	closeShowHighScoreModalButtonListener() {
 		this.startModalClass!.openModal();
 		this.highScoreModalClass!.closeModal();
+	}
+
+	startNewGameButtonListener() {
+		this.game.saveScoreToLocalStorage();
+		this.game.resetGame();
+		this.game.initCountdownBeforeGameStart(3);
+
+		this.scoreboard.innerHTML = this.game.score.toString();
+
+		this.inputPlayerNameModalClass?.closeModal();
+	}
+
+	closeInputPlayerNameModalButtonListener() {
+		this.game.saveScoreToLocalStorage();
+		this.game.resetGame();
+
+		this.scoreboard.innerHTML = this.game.score.toString();
+
+		this.inputPlayerNameModalClass!.closeModal();
+		this.startModalClass!.openModal();
 	}
 }
 
